@@ -1,0 +1,14 @@
+{
+  "topic": "Example deck",
+  "template": "templates/your-template.pptx",
+  "content": "examples/content.example.json",
+  "output": "output/example.pptx",
+  "render_dir": "render",
+  "notes": "examples/notes.md",
+  "sources": "examples/sources.md",
+  "quality": {
+    "min_slides": 1,
+    "min_text_chars": 20,
+    "required_terms": ["Example"]
+  }
+}

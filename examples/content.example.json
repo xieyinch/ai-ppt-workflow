@@ -1,0 +1,11 @@
+{
+  "slides": [
+    {
+      "src": 1,
+      "map": {
+        "Template title": "Example title",
+        "Template subtitle": "Example"
+      }
+    }
+  ]
+}

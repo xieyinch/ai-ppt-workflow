@@ -1,0 +1,22 @@
+# Bytecode, generated decks, templates, and runtime state
+__pycache__/
+*.pyc
+.deps/
+node_modules/
+output/
+render/
+render-*/
+templates/
+*.pptx
+*.potx
+*.pdf
+*.log
+*.tmp
+.env
+.env.*
+
+# Local/editor/system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
