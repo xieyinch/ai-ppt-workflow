@@ -45,11 +45,16 @@ The configuration must define `template`, `content`, `output`, `render_dir`, `no
 
 ## Quick Reference
 
-- `scripts/run_workflow.py` — build, reopen, export PNGs, and report PASS/FAIL.
-- `scripts/build.py` — PowerPoint COM implementation.
-- `scripts/update_charts.py` — native chart-data updater.
-- `scripts/qa.py` — package, content, notes, source, and media checks.
-- `scripts/list_shapes.py` — inspect template text slots.
+- `src/run_workflow.py` — stable one-command entry for planning, build, QA, rendering, and contact sheet.
+- `src/agent_workflow.py` — complete native workflow orchestration.
+- `src/make_ppt.py` — multi-backend route dispatcher with explicit artifact contracts.
+- `src/plan_layouts.py` — semantic page-job and visual-layout planning.
+- `src/build.py` — PowerPoint COM implementation.
+- `src/qa.py` — package, content, notes, source, render, and media checks.
+- `src/make_contact_sheet.py` — visual review sheet generator.
+- `src/export_html.py` — optional browser preview exporter.
+- `src/update_charts.py` — native chart-data updater.
+- `src/list_shapes.py` — inspect template text slots.
 - `examples/deck.config.example.json` — minimal configuration.
 - `examples/content.example.json` — minimal content map.
 

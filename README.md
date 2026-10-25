@@ -17,6 +17,8 @@
 - 自动导出每页 PNG
 - 结构 QA：页数、占位符、关键词、讲稿、来源和媒体
 - 不绑定任何私有模板；用户可以提供自己的 `.pptx` / `.potx`
+- 新增语义版式规划、统一路由、contact sheet 和可选 HTML 预览
+- 每次运行记录实际后端和产物可编辑性，避免把 HTML 或图片型 PPTX 冒充为原生可编辑
 
 ## 环境
 
@@ -33,8 +35,8 @@
 4. 运行：
 
 ```bash
-python scripts/run_workflow.py --config deck.config.json
-python scripts/qa.py
+python src/run_workflow.py --config deck.config.json
+python src/qa.py deck.config.json
 ```
 
 生成结果由配置文件中的 `output` 和 `render_dir` 指定。

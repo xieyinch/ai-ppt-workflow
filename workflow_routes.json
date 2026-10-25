@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "default_route": "auto",
+  "routes": {
+    "native": {
+      "backend": "ppt-master-compatible-native",
+      "artifact": "editable-pptx",
+      "entry": "src/agent_workflow.py",
+      "editable": true
+    },
+    "guizang": {
+      "backend": "guizang-ppt-skill",
+      "artifact": "html-deck",
+      "entry": "../guizang-ppt-skill/scripts/build_ai_agent_magazine.py",
+      "editable": "browser-dom"
+    },
+    "huashu": {
+      "backend": "huashu-design",
+      "artifact": "html-or-editable-pptx",
+      "entry": "../huashu-design/scripts/export_deck_pptx.mjs",
+      "editable": "depends-on-html-constraints"
+    },
+    "image": {
+      "backend": "rendered-slide-fallback",
+      "artifact": "image-pptx",
+      "entry": "scripts/export_fallback.mjs",
+      "editable": false
+    }
+  },
+  "selection_rules": [
+    "用户明确要求原生可编辑、答辩、课程汇报或客户交付 -> native",
+    "用户要求杂志风、网页演示、演讲模式或瑞士网格 -> guizang",
+    "用户要求高保真视觉并且需要尝试 HTML 转 PPTX -> huashu",
+    "HTML 使用复杂动画/渐变/整页视觉图，无法逐元素转换 -> image"
+  ]
+}

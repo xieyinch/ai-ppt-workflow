@@ -1,0 +1,40 @@
+{
+  "presets": {
+    "editorial": {
+      "description": "杂志叙事：大标题、图片主导、低密度、章节节奏",
+      "density": "low",
+      "palette": ["ink", "paper", "accent"],
+      "layouts": ["cover", "statement", "image-text", "quote", "closing"],
+      "rules": ["one idea per slide", "large title", "short body", "use purposeful images"]
+    },
+    "swiss": {
+      "description": "瑞士国际主义：网格、直角、发丝线、单一高饱和锚点色",
+      "density": "medium",
+      "palette": ["white", "black", "anchor"],
+      "layouts": ["cover", "grid", "process", "comparison", "data", "closing"],
+      "rules": ["fixed grid", "title as assertion", "no decorative cards", "cite inline"]
+    },
+    "cyberpunk": {
+      "description": "未来科技：深色底、霓虹锚点、强对比、有限动效",
+      "density": "medium",
+      "palette": ["night", "neon-blue", "neon-green", "hot-pink"],
+      "layouts": ["hero", "toc", "process", "services", "gallery", "quote", "closing"],
+      "rules": ["keep neon accent sparse", "avoid long body copy", "short labels", "preserve readability"]
+    },
+    "corporate": {
+      "description": "商务汇报：稳定网格、清晰数据、低装饰、强层级",
+      "density": "medium-high",
+      "palette": ["navy", "white", "blue"],
+      "layouts": ["cover", "agenda", "problem", "method", "data", "roadmap", "closing"],
+      "rules": ["show evidence", "use editable charts", "keep sources visible", "avoid stock graphics"]
+    }
+  },
+  "global_rules": [
+    "Choose a real template or a named style preset before writing slides.",
+    "Use one main job per slide and keep body text within the template's text-box budget.",
+    "Every image, icon, and chart must explain the page claim.",
+    "Prefer native editable text, shapes, charts, and tables for PPTX output.",
+    "Keep HTML preview as an optional delivery route; do not call an HTML preview a native PPTX.",
+    "Render every slide and inspect a contact sheet before delivery."
+  ]
+}
