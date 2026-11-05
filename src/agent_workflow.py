@@ -4,7 +4,7 @@ Routes one request through:
 1) native PowerPoint template/native-object build
 2) speaker notes written into the PPTX notes pane, then read back
 3) structural and content QA
-4) text-overflow screening report per slide
+4) text-overflow screening and layout-repetition screening per slide
 5) rendered slide contact sheet for visual review
 6) optional browser preview HTML (never confused with native PPTX)
 
@@ -32,6 +32,8 @@ def main() -> int:
     parser.add_argument("--no-contact-sheet", action="store_true")
     parser.add_argument("--strict-overflow", action="store_true",
                         help="fail the run when the overflow screening flags a page")
+    parser.add_argument("--strict-diversity", action="store_true",
+                        help="fail the run when the same layout repeats too much")
     args = parser.parse_args()
 
     config = Path(args.config).resolve()
@@ -72,6 +74,15 @@ def main() -> int:
             print("FAIL text overflow screening found pages to fix (see {})".format(overflow))
             return 1
         print(f"REVIEW text overflow screening flagged pages: {overflow}")
+    diversity = output.with_name(output.stem + "-diversity.json")
+    diversity_code = run([sys.executable, str(ROOT / "src" / "check_layout_diversity.py"),
+                          str(output), "--json", str(diversity)])
+    if diversity_code != 0:
+        if args.strict_diversity:
+            print(f"FAIL layout repetition found (see {diversity})")
+            return 1
+        print(f"REVIEW layout repetition flagged: {diversity}")
+
     if not args.no_contact_sheet:
         if run([sys.executable, str(ROOT / "src" / "make_contact_sheet.py"), str(render_dir), str(contact)]) != 0:
             return 1
@@ -84,6 +95,7 @@ def main() -> int:
     print(f"contact_sheet={contact}")
     print(f"layout_plan={plan_path}")
     print(f"overflow_report={overflow}")
+    print(f"diversity_report={diversity}")
     return 0
 
 

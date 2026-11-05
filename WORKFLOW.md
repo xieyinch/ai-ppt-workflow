@@ -87,6 +87,7 @@ python src/make_ppt.py --route auto --config deck.config.json
    交付前固定三件事：
    - `notes.md` 用 `## Slide N` 分段，构建后自动注入备注并回读校验（`src/write_notes.py`）；
    - `src/check_overflow.py` 输出 `output/<deck>-overflow.json`，`REVIEW` 的页码必须开图看一眼；
+   - `src/check_layout_diversity.py` 输出 `output/<deck>-diversity.json`，判定标准见下节；
    - 每页 PNG 逐张过一遍，不只看 contact sheet 缩略图。
 
 ## Agent 设计路由
@@ -105,6 +106,29 @@ python src/make_ppt.py --route auto --config deck.config.json
 生成 `content.json` 与 `deck.config.json`。要手工换模板就复制这两份文件，
 只改 `template`、`content`、`output`、`render_dir` 四项，并重建内容映射（键 = 新模板里的原文）。
 同一占位符在多个卡片中重复时，把值写成数组，程序会按模板顺序逐个填入。程序入口和 QA 不用动。
+
+## 版式不能重复（硬规则）
+
+用户原话：**“后面 5/6/7 页用的模板完全相同，很容易让人产生审美疲劳，以后不要这么做；
+可以同时使用多个 PPT 模板来制作一个 PPT，但要保持风格的一致性。”**
+
+落到可执行的判定（`src/check_layout_diversity.py`）：
+
+| 判定 | 上限 | 说明 |
+|---|---|---|
+| 同一版式连续出现 | ≤ 2 页 | 3 页连续同版式即 `REVIEW` |
+| 单一版式占全册比例 | ≤ 40% | 防止整份稿子靠一个“顺手版式”撑完 |
+| 相邻两页版式 + 对象构成完全相同 | 0 | 典型“只换了文字”的复制页 |
+
+两种合规做法：
+
+1. **同一母版换主题**：`inner-chapter` / `-navy` / `-ink` 共用 59 套版式，换主题色板与中文字体即可拉开差异，
+   但标题层级、页眉页脚、插图语言天然一致，不会拼贴。
+2. **换版式而不是换字**：同一页型在 `layouts.json` 里通常有 a/b 变体
+   （`content-image-right-a` / `-b`、`column-3` / `column-3-centered-a`），轮换使用即可。
+
+混用外部多套模板也可以，但必须先统一：色板、字体、标题层级、页眉页脚、配图风格。
+只换模板不统一风格，等于把审美疲劳换成拼贴感，同样不合格。
 
 ## 图片与图标替换
 在页面条目中增加 `images` 数组即可替换模板图片：

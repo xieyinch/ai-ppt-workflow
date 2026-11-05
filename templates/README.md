@@ -50,6 +50,18 @@ python src/run_workflow.py --config decks/我的汇报/deck.config.json
 - 图文混排：`content_with_image`、`story_card`、`grid_2x2_2body`
 - 纯论述：`content_centered`
 
+## 三套模板怎么轮换（别整册只用一套）
+
+同一份 PPT 里不要连续 3 页用同一版式，也不要让一套模板撑完所有页 ——
+`inner-chapter` / `-navy` / `-ink` 共享 59 套版式，正好用来换气口：
+
+- 开场用 `title-cover`，第一章结束用 `title-centered`，不要每章都重复封面构图；
+- 并列内容在 `column-3` 与 `column-3-centered-a`、`content-image-right-a` 与 `-b` 之间轮换；
+- 全册至少出现 4 种不同版式，单一版式不超过 40%；
+- 换主题（navy ↔ ink）能明显拉开视觉差异，且标题层级、页眉页脚、插图语言仍然一致。
+
+构建后跑 `python src/check_layout_diversity.py <deck.pptx>` 自检，`REVIEW` 就回去改版式，不是改文字。
+
 ## 授权
 
 - `inner-chapter` 来自 [tristan-mcinnis/pptx-from-layouts-skill](https://github.com/tristan-mcinnis/pptx-from-layouts-skill)，MIT，版权归原作者（见 `LICENSE`）。

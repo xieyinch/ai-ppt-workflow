@@ -46,6 +46,7 @@ python src/run_workflow.py --config decks/我的汇报/deck.config.json  # 构�
 - 自动重新打开生成的 PPTX，自动导出每页 PNG，生成 contact sheet
 - **讲稿写进 PPT 备注**：`notes.md` 按 `## Slide N` 分段，构建后自动注入备注页并回读校验
 - **文字溢出预检**：按真实字体度量逐框估算，输出 `*-overflow.json`，避免交付前才发现文字压边
+- **版式重复预检**：禁止连续 3 页同一版式、禁止单一版式占比 >40%，输出 `*-diversity.json`（就是“5/6/7 页一模一样”那个问题）
 - 结构 QA：页数、占位符、关键词、讲稿、来源和媒体
 - 支持自带 `.pptx` / `.potx` 模板，或用 `--blank` 从 59 套版式里自选
 - 每次运行记录实际后端和产物可编辑性，不把 HTML 或图片型 PPTX 冒充成原生可编辑
@@ -94,6 +95,7 @@ python src/run_workflow.py --config decks/我的汇报/deck.config.json  # 构�
 | `python src/qa.py <cfg>` | 只跑结构校验 |
 | `python src/write_notes.py <deck.pptx> <notes.md>` | 把逐页讲稿写入 PPT 备注（`--check` 只校验） |
 | `python src/check_overflow.py <deck.pptx> [--limit 1.0] [--json r.json]` | 文字溢出预检（`--strict-overflow` 可让整轮构建失败） |
+| `python src/check_layout_diversity.py <deck.pptx> [--max-run 2] [--max-share 0.4]` | 版式重复预检（`--strict-diversity` 可让整轮构建失败） |
 | `powershell -File scripts/render_previews.ps1 -Pptx <deck.pptx> -OutDir render` | 只导 PNG，用于逐页复核 |
 
 ## 公开发布范围

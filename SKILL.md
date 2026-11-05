@@ -53,6 +53,16 @@ The configuration must define `template`, `content`, `output`, `render_dir`, `no
 - `src/qa.py` — package, content, notes, source, render, and media checks.
 - `src/write_notes.py` — write per-slide speaker notes from `notes.md` into the PPTX notes pane, then verify by reading back.
 - `src/check_overflow.py` — screen every text shape for overflow against its box using real font metrics.
+- `src/check_layout_diversity.py` — block repeated compositions: no 3+ consecutive pages on one layout, no single layout over 40% of the deck.
+
+## Layout Diversity Is a Delivery Gate
+
+The user has explicitly rejected a deck whose pages 5/6/7 all used the same template ("审美疲劳").
+Mixing several templates inside one deck is allowed; repeating one composition is not.
+Rotate layout variants (`content-image-right-a` / `-b`, `column-3` / `column-3-centered-a`),
+or reuse one master with different themes (`inner-chapter-navy` / `-ink`). When mixing external
+templates, align palette, fonts, title hierarchy, header/footer, and illustration language first —
+an unfixed mix trades fatigue for a collage look and is equally unacceptable.
 - `src/make_contact_sheet.py` — visual review sheet generator.
 - `src/export_html.py` — optional browser preview exporter.
 - `src/update_charts.py` — native chart-data updater.
@@ -74,7 +84,8 @@ The configuration must define `template`, `content`, `output`, `render_dir`, `no
 7. **Run QA.** Run `terminal(command="python scripts/qa.py", timeout=60)`. Completion criterion: QA reports `status: PASS` for the same output named by `deck.config.json`.
 8. **Carry the script in the deck.** Run `python src/write_notes.py <deck.pptx> <notes.md>` so the delivered file opens with speaker notes on each page, and check `*-overflow.json` from the routing run. Completion criterion: notes read back per slide and no unreviewed overflow page remains.
 9. **Review visuals.** Review every rendered PNG, not only the cover. Check overlap, clipping, font substitution, unrelated stock graphics, image crop, and readable information density. Completion criterion: every slide has been reviewed and any defect is fixed and rebuilt.
-10. **Deliver.** Provide the editable `.pptx`, speaker notes, and source list. Do not include private templates, credentials, browser profiles, generated caches, or personal records in a public repository.
+10. **Check layout diversity.** Run `python src/check_layout_diversity.py <deck.pptx>`; a `REVIEW` verdict means pages must be re-laid out, not re-worded. Completion criterion: no 3+ page run and no layout over 40%.
+11. **Deliver.** Provide the editable `.pptx`, speaker notes, and source list. Do not include private templates, credentials, browser profiles, generated caches, or personal records in a public repository.
 
 ## Bundled Templates
 
