@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "note": "Ready-to-use PPTX templates. Every deck keeps native masters/layouts and stays fully editable.",
+  "templates": [
+    {
+      "slug": "inner-chapter",
+      "name": "Inner Chapter",
+      "style": "black & white editorial, blue/orange accents",
+      "layouts": 59,
+      "ratio": "16:9",
+      "language": "en master, zh-CN text works",
+      "files": {
+        "blank": "templates/inner-chapter/template.pptx",
+        "starter": "templates/inner-chapter/starter.pptx",
+        "profile": "templates/inner-chapter/layouts.json"
+      },
+      "license": "MIT",
+      "origin": "https://github.com/tristan-mcinnis/pptx-from-layouts-skill",
+      "use_for": [
+        "consulting decks",
+        "research readouts",
+        "product reviews"
+      ]
+    },
+    {
+      "slug": "inner-chapter-navy",
+      "name": "Inner Chapter — Deep Navy",
+      "style": "white ground, deep navy + azure accents, 微软雅黑",
+      "layouts": 59,
+      "ratio": "16:9",
+      "language": "zh-CN / en",
+      "files": {
+        "blank": "templates/inner-chapter-navy/template.pptx",
+        "starter": "templates/inner-chapter-navy/starter.pptx"
+      },
+      "license": "MIT (theme derivative of inner-chapter)",
+      "origin": "recolored from inner-chapter; upstream https://github.com/tristan-mcinnis/pptx-from-layouts-skill (MIT)",
+      "use_for": [
+        "技术方案",
+        "课程汇报",
+        "corporate"
+      ]
+    },
+    {
+      "slug": "inner-chapter-ink",
+      "name": "Inner Chapter — Ink & Paper",
+      "style": "warm paper ground, ink black + gold accents, 思源黑体 CN",
+      "layouts": 59,
+      "ratio": "16:9",
+      "language": "zh-CN / en",
+      "files": {
+        "blank": "templates/inner-chapter-ink/template.pptx",
+        "starter": "templates/inner-chapter-ink/starter.pptx"
+      },
+      "license": "MIT (theme derivative of inner-chapter)",
+      "origin": "recolored from inner-chapter; upstream https://github.com/tristan-mcinnis/pptx-from-layouts-skill (MIT)",
+      "use_for": [
+        "材料/建筑/人文类学术汇报",
+        "editorial decks"
+      ]
+    }
+  ]
+}

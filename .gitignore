@@ -1,21 +1,26 @@
-# Bytecode, generated decks, templates, and runtime state
+# Bytecode and runtime
 __pycache__/
 *.pyc
 .deps/
 node_modules/
-output/
-render/
-render-*/
-templates/
-*.pptx
-*.potx
-*.pdf
+
+# Generated output — never commit deliverables
+/output/
+/render/
+/render-*/
+/decks/
 *.log
 *.tmp
 .env
 .env.*
 
-# Local/editor/system files
+# User-supplied private templates (the bundled pack in templates/ stays tracked)
+/private-templates/
+/input/*.pptx
+/input/*.potx
+/templates/_local/
+
+# Editor / system
 .vscode/
 .idea/
 .DS_Store
