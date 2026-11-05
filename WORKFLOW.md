@@ -23,6 +23,8 @@ ai-ppt-workflow/
 └── src/
     ├── run_workflow.py       # 稳定的一键入口
     ├── build.py              # PowerPoint COM 填充、重开校验、PNG 导出
+    ├── write_notes.py        # 把 notes.md 逐页写进 PPT 备注并回读
+    ├── check_overflow.py     # 文字溢出预检（真实字体度量）
     └── qa.py                 # 结构校验（页数/字数/关键词/媒体/文件完整性）
 ```
 
@@ -80,7 +82,12 @@ python src/make_ppt.py --route auto --config deck.config.json
 3. **定大纲**：写 `input/blueprint.json`，先有叙事再填字。
 4. **语义版式规划**：为每页确定 page job 和 visual type，再从 `layouts.json` 中选候选版式；结果保存为 `*-layout-plan.json`。
 5. **填内容**：把模板原文与新内容的对应关系写进 `content.json`，改 `deck.config.json` 指向选定模板，运行 `run_workflow.py`。
-6. **校验交付**：统一入口会生成 PPTX、讲稿、来源、渲染 PNG 和 contact sheet；`--html-preview` 只生成浏览器审阅版，不替代原生 PPTX。
+6. **校验交付**：统一入口会生成 PPTX、把讲稿写进 PPT 备注、跑结构 QA、做文字溢出预检，再导出渲染 PNG 与 contact sheet；`--html-preview` 只生成浏览器审阅版，不替代原生 PPTX。
+
+   交付前固定三件事：
+   - `notes.md` 用 `## Slide N` 分段，构建后自动注入备注并回读校验（`src/write_notes.py`）；
+   - `src/check_overflow.py` 输出 `output/<deck>-overflow.json`，`REVIEW` 的页码必须开图看一眼；
+   - 每页 PNG 逐张过一遍，不只看 contact sheet 缩略图。
 
 ## Agent 设计路由
 

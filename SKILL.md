@@ -51,6 +51,8 @@ The configuration must define `template`, `content`, `output`, `render_dir`, `no
 - `src/plan_layouts.py` — semantic page-job and visual-layout planning.
 - `src/build.py` — PowerPoint COM implementation.
 - `src/qa.py` — package, content, notes, source, render, and media checks.
+- `src/write_notes.py` — write per-slide speaker notes from `notes.md` into the PPTX notes pane, then verify by reading back.
+- `src/check_overflow.py` — screen every text shape for overflow against its box using real font metrics.
 - `src/make_contact_sheet.py` — visual review sheet generator.
 - `src/export_html.py` — optional browser preview exporter.
 - `src/update_charts.py` — native chart-data updater.
@@ -70,8 +72,9 @@ The configuration must define `template`, `content`, `output`, `render_dir`, `no
 5. **Create the mapping.** Use `map` for text. When the same placeholder occurs in sibling cards, use an array; values are consumed in template order. Use `images` for pictures/icons and `charts` for native chart data. Completion criterion: all intended replacements have a target.
 6. **Build.** Run `terminal(command="python scripts/run_workflow.py --config deck.config.json", timeout=600)`. Completion criterion: the result reports `status: PASS`, the expected slide count, zero leftover placeholders, and one PNG per output slide.
 7. **Run QA.** Run `terminal(command="python scripts/qa.py", timeout=60)`. Completion criterion: QA reports `status: PASS` for the same output named by `deck.config.json`.
-8. **Review visuals.** Review every rendered PNG, not only the cover. Check overlap, clipping, font substitution, unrelated stock graphics, image crop, and readable information density. Completion criterion: every slide has been reviewed and any defect is fixed and rebuilt.
-9. **Deliver.** Provide the editable `.pptx`, speaker notes, and source list. Do not include private templates, credentials, browser profiles, generated caches, or personal records in a public repository.
+8. **Carry the script in the deck.** Run `python src/write_notes.py <deck.pptx> <notes.md>` so the delivered file opens with speaker notes on each page, and check `*-overflow.json` from the routing run. Completion criterion: notes read back per slide and no unreviewed overflow page remains.
+9. **Review visuals.** Review every rendered PNG, not only the cover. Check overlap, clipping, font substitution, unrelated stock graphics, image crop, and readable information density. Completion criterion: every slide has been reviewed and any defect is fixed and rebuilt.
+10. **Deliver.** Provide the editable `.pptx`, speaker notes, and source list. Do not include private templates, credentials, browser profiles, generated caches, or personal records in a public repository.
 
 ## Bundled Templates
 

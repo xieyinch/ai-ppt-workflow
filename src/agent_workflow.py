@@ -2,9 +2,11 @@
 
 Routes one request through:
 1) native PowerPoint template/native-object build
-2) structural and content QA
-3) rendered slide contact sheet for visual review
-4) optional browser preview HTML (never confused with native PPTX)
+2) speaker notes written into the PPTX notes pane, then read back
+3) structural and content QA
+4) text-overflow screening report per slide
+5) rendered slide contact sheet for visual review
+6) optional browser preview HTML (never confused with native PPTX)
 
 The existing build.py remains the authoritative PowerPoint/COM mutation engine.
 """
@@ -28,6 +30,8 @@ def main() -> int:
     parser.add_argument("--config", default=str(ROOT / "deck.config.json"))
     parser.add_argument("--html-preview", action="store_true", help="also export a browser preview")
     parser.add_argument("--no-contact-sheet", action="store_true")
+    parser.add_argument("--strict-overflow", action="store_true",
+                        help="fail the run when the overflow screening flags a page")
     args = parser.parse_args()
 
     config = Path(args.config).resolve()
@@ -46,8 +50,28 @@ def main() -> int:
 
     if run([sys.executable, str(ROOT / "src" / "build.py"), "--config", str(config)]) != 0:
         return 1
+
+    # The delivered deck carries its script in the notes pane, not in a side file.
+    notes_src = ROOT / cfg["notes"]
+    if notes_src.exists():
+        notes_code = run([sys.executable, str(ROOT / "src" / "write_notes.py"),
+                          str(output), str(notes_src)])
+        if notes_code != 0:
+            print("WARN speaker notes were not written into the deck")
+    else:
+        print(f"WARN no notes file at {notes_src}; deck ships without speaker notes")
+
     if run([sys.executable, str(ROOT / "src" / "qa.py"), str(config)]) != 0:
         return 1
+
+    overflow = output.with_name(output.stem + "-overflow.json")
+    overflow_code = run([sys.executable, str(ROOT / "src" / "check_overflow.py"),
+                         str(output), "--json", str(overflow)])
+    if overflow_code != 0:
+        if args.strict_overflow:
+            print("FAIL text overflow screening found pages to fix (see {})".format(overflow))
+            return 1
+        print(f"REVIEW text overflow screening flagged pages: {overflow}")
     if not args.no_contact_sheet:
         if run([sys.executable, str(ROOT / "src" / "make_contact_sheet.py"), str(render_dir), str(contact)]) != 0:
             return 1
@@ -59,6 +83,7 @@ def main() -> int:
     print(f"pptx={output}")
     print(f"contact_sheet={contact}")
     print(f"layout_plan={plan_path}")
+    print(f"overflow_report={overflow}")
     return 0
 
 
